@@ -59,7 +59,7 @@ public class HandCheck : MonoBehaviour {
 				shoulder2HandVec.z = shoulder2HandVec.x;
 				shoulder2HandVec.x = tmp;
 
-				if(showShoulder2HandVecObject != null)showShoulder2HandVecObject.transform.LookAt(shoulder2HandVec);
+				if(showShoulder2HandVecObject != null)showShoulder2HandVecObject.transform.LookAt(showShoulder2HandVecObject.transform.position + shoulder2HandVec);
 				isHandUp = true;
 			}
 			else
