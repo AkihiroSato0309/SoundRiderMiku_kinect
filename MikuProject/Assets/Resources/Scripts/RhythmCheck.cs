@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class RhythmCheck : MonoBehaviour {
+public class RhythmCheck : MonoBehaviour, IRhythmCheck{
 	
 	private KinectManager manager;
 
@@ -35,7 +35,7 @@ public class RhythmCheck : MonoBehaviour {
 	public float deadVal = 0.01f;
 	
 
-	// Use this for initialization
+	// 開始処理
 	void Start () {
 		// キネクトマネージャーの取得
 		manager = KinectManager.Instance;
@@ -56,7 +56,7 @@ public class RhythmCheck : MonoBehaviour {
 		Vector3 pos = manager.GetJointPosition (userId, (int)checkBodyType);
 	}
 	
-	// Update is called once per frame
+	// 更新処理
 	void Update () {
 		// タイマーを増やす
 		timer += Time.deltaTime;
@@ -66,7 +66,6 @@ public class RhythmCheck : MonoBehaviour {
 			long userId = manager.GetUserIdByIndex (0);  // manager.GetPrimaryUserID();
 
 			Vector3 pos = manager.GetJointPosition (userId, (int)checkBodyType);
-			checkObject.transform.position = pos;
 
 			// 平均法によるリズム検出
 			/*
@@ -135,8 +134,13 @@ public class RhythmCheck : MonoBehaviour {
 
 	}
 
+	public int GetBPM()
+	{
+		return (int)currentBPM;
+	}
+
 	void OnGUI()
 	{
-		GUI.Label (new Rect (0, 0, 100, 30), rhythmAvarage.ToString());
+		//GUI.Label (new Rect (0, 0, 100, 30), rhythmAvarage.ToString());
 	}
 }

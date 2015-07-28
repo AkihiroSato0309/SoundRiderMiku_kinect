@@ -37,7 +37,7 @@ public class SoundManager : MonoBehaviour
 
 	// --------------- private ---------------
 	private AudioSource audio;						// 親オブジェクトにアタッチされたAudioSource.
-	private PlayerStub player;
+	private RhythmCheck player;
 	private int bpm;								// beat per minute.
 	private float bps;								// beat per second.
 	private double subBeatFreq;						// サブビートの頻度.
@@ -48,6 +48,9 @@ public class SoundManager : MonoBehaviour
 	private Dictionary<SE, AudioClip> seClips;		// サウンドの実データ.
 	private Dictionary<SE, string> seClipPathes;	// サウンドファイルのパス.
 	private Queue<SE> waitingSounds;				// 再生待機中のサウンド.
+
+	private int playerBPM;
+	private float c;
 	
 	// --------------- property ---------------
 	public float Time { get { return this.audio.time; } }
@@ -96,9 +99,12 @@ public class SoundManager : MonoBehaviour
 	{
 		// オブジェクトの取得.
 		this.audio = GetComponent<AudioSource>();
-		this.player = GameObject.Find ("Player").GetComponent<PlayerStub> ();
+		//this.player = GameObject.Find ("Player").GetComponent<PlayerStub> ();
+		this.player = GameObject.Find ("RhythmCheck").GetComponent<RhythmCheck> ();
 
 		// 必要情報の計算.
+		//this.startTime = 1.815f;
+		//this.bpm = 135;
 		this.startTime = 1.815f;
 		this.bpm = 135;
 		this.bps = this.bpm / 60.0f;								// 1秒間のビート数 = 1分間のビート数 / 1分
@@ -202,10 +208,37 @@ public class SoundManager : MonoBehaviour
 	****************************************************************************************/
 	private void ChangeBGMSpeedDependingOnPlayerTempo ()
 	{
-		float playerBPM = Mathf.Max (this.player.BPM, 1.0f);
-		float speed = Mathf.Clamp (playerBPM / this.bpm, this.playSpeedMin, this.playSpeedMax);
-		this.audio.pitch = speed;
+		/*
+		playerBPM = this.player.GetBPM ();
+		int waru_1 = (playerBPM / 5) * 5;
+		int waru_2 = waru_1 + 5;
+		if (Mathf.Abs (playerBPM - waru_1) < Mathf.Abs (playerBPM - waru_2)) {
+			playerBPM = waru_1;
+		} else {
+			playerBPM = waru_2;
+		}
+		*/
+
+		//float playerBPMf = Mathf.Max (playerBPM, 1.0f);
+		//float speed = Mathf.Clamp (playerBPMf / this.bpm, this.playSpeedMin, this.playSpeedMax);
+		float speed = this.player.GetBPM () / (float)this.bpm;
+		int num1 = (int)(speed * 100);
+		int num2 = num1 % 10;
+		if (num2 < 5) {
+			speed = (num1 / 10) / 10.0f;
+		} else {
+			speed = (num1 / 10 + 1) / 10.0f;
+		}
+
+		c = Mathf.Lerp (c, speed, 0.01f);
+		this.audio.pitch = c;
 
 		//Debug.Log ("Player's BPM: " + this.player.BPM.ToString () + "  Speed: " + speed.ToString ());
+
+	}
+
+	void OnGUI()
+	{
+		GUI.Label (new Rect(0, 20, 200, 50), this.audio.pitch.ToString());
 	}
 }
