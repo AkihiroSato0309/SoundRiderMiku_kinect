@@ -23,7 +23,7 @@ public class PlayerStub : MonoBehaviour
 	void Update()
 	{
 		Vector3 newPos = new Vector3 (initialPos.x, initialPos.y, this.soundManager.Time * speed);
-		this.transform.position = newPos;
+		//this.transform.position = newPos;
 
 		if (Input.GetKeyDown (KeyCode.Space))
 		{

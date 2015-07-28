@@ -69,6 +69,7 @@ public class HandCheck : MonoBehaviour {
 		}
 	}
 
+	/*
 	void OnGUI()
 	{
 		if (manager && manager.IsUserDetected ()) {
@@ -77,4 +78,5 @@ public class HandCheck : MonoBehaviour {
 			GUI.Label (new Rect (0, 20, 100, 30), manager.GetJointPosition (userId, (int)KinectInterop.JointType.HandRight).ToString());
 		}
 	}
+	*/
 }

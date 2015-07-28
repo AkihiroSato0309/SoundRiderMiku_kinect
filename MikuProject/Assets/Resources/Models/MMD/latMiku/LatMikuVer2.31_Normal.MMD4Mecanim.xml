@@ -130,7 +130,9 @@
     <vertexScaleByHeight>158</vertexScaleByHeight>
     <waitProcessExitting>false</waitProcessExitting>
     <pmxAssetPath>Assets/Resources/Models/MMD/latMiku/LatMikuVer2.31_Normal.pmd</pmxAssetPath>
-    <vmdAssetPathList />
+    <vmdAssetPathList>
+      <string>Assets/Resources/Models/MMD/latMiku/walk.vmd</string>
+    </vmdAssetPathList>
     <fbxOutputPath>Assets/Resources/Models/MMD/latMiku/LatMikuVer2.31_Normal.fbx</fbxOutputPath>
     <useWineFlag>false</useWineFlag>
     <wine>Manual</wine>
@@ -157,5 +159,6 @@
     <addLightToonMin>0.5</addLightToonMin>
     <autoLuminous>Disable</autoLuminous>
     <autoLuminousPower>5</autoLuminousPower>
+    <materialProperyList />
   </mmd4MecanimProperty>
 </PMX2FBXConfig>
