@@ -29,33 +29,32 @@ public class SoundManager : MonoBehaviour
 {
 	// --------------- inspector ---------------
 	[SerializeField]
+	private int originalBPM = 135;		// 原曲のBPM (beat per minute).
+	[SerializeField]
 	private float subBeatPerBeat = 4;	// 1ビートにおけるサブビートの数.
+	[SerializeField]	
+	private float startTime = 1.815f;	// 曲の開始時間.
 	[SerializeField]
-	private float playSpeedMin = 0.5f;
+	private float playSpeedMin = 0.5f;	// 再生スピードの最小値
 	[SerializeField]
-	private float playSpeedMax = 1.5f;
+	private float playSpeedMax = 1.5f;	// 再生スピードの最大値
 
 	// --------------- private ---------------
 	private AudioSource audio;						// 親オブジェクトにアタッチされたAudioSource.
-	private RhythmCheck player;
-	private int bpm;								// beat per minute.
-	private float bps;								// beat per second.
+	private IRhythmCheck rhythmChecker;				// プレイヤーのリズムを取得するオブジェクト
+	private float originalBPS;						// 原曲のBPS (beat per second).
 	private double subBeatFreq;						// サブビートの頻度.
 	private double nextSubBeatTime = 0;				// 次のサブビートのタイミング
-	private float startTime;						// 曲の開始時間.
 	private float prevPlayingTime = 0;				// 音声ファイルの前フレームにおける再生時間（再生地点）.
 	private float deltaTime = 0;					// 前フレームから今フレームまでにどれだけ再生時間が進んだか.
 	private Dictionary<SE, AudioClip> seClips;		// サウンドの実データ.
 	private Dictionary<SE, string> seClipPathes;	// サウンドファイルのパス.
 	private Queue<SE> waitingSounds;				// 再生待機中のサウンド.
-
-	private int playerBPM;
-	private float c;
 	
 	// --------------- property ---------------
 	public float Time { get { return this.audio.time; } }
 	public float DeltaTime { get { return this.deltaTime; } }
-	public float BPS { get { return this.bps; } }
+	public float OriginalBPS { get { return this.originalBPS; } }
 	public float SubBeatFreq { get { return (float)this.subBeatFreq; } }
 
 
@@ -99,20 +98,15 @@ public class SoundManager : MonoBehaviour
 	{
 		// オブジェクトの取得.
 		this.audio = GetComponent<AudioSource>();
-		//this.player = GameObject.Find ("Player").GetComponent<PlayerStub> ();
-		this.player = GameObject.Find ("RhythmCheck").GetComponent<RhythmCheck> ();
+		this.rhythmChecker = GameObject.Find ("RhythmCheck").GetComponent<IRhythmCheck> ();
 
 		// 必要情報の計算.
-		//this.startTime = 1.815f;
-		//this.bpm = 135;
-		this.startTime = 1.815f;
-		this.bpm = 135;
-		this.bps = this.bpm / 60.0f;								// 1秒間のビート数 = 1分間のビート数 / 1分
-		this.subBeatFreq = 1 / (this.bps * this.subBeatPerBeat);	// タイミングの頻度（秒） = 1秒 / 1秒間におけるタイミングの数
+		this.originalBPS = this.originalBPM / 60.0f;						// 1秒間のビート数 = 1分間のビート数 / 1分
+		this.subBeatFreq = 1 / (this.originalBPS * this.subBeatPerBeat);	// タイミングの頻度（秒） = 1秒 / 1秒間におけるタイミングの数
 
 		// ログ出力.
-		Debug.Log ("BPM: " + bpm.ToString ());
-		Debug.Log ("BPS: " + bps.ToString ());
+		Debug.Log ("BPM: " + originalBPM.ToString ());
+		Debug.Log ("BPS: " + originalBPS.ToString ());
 		Debug.Log ("Beat Freq: " + (subBeatFreq * subBeatPerBeat).ToString ());
 		Debug.Log ("Sub Beat Freq: " + subBeatFreq.ToString ());
 	}
@@ -138,6 +132,16 @@ public class SoundManager : MonoBehaviour
 
 		// 次フレームでDeltaTimeを計算するために, 現在の再生時間を保存.
 		this.prevPlayingTime = this.audio.time;
+	}
+
+	/************************************************************************************//**
+	デバッグ表示.
+		
+	@return なし		
+	****************************************************************************************/
+	void OnGUI()
+	{
+		GUI.Label (new Rect(0, 20, 200, 50), "Pitch: " + this.audio.pitch.ToString());
 	}
 
 	/************************************************************************************//**
@@ -190,7 +194,6 @@ public class SoundManager : MonoBehaviour
 			{
 				var index = waitingSounds.Dequeue ();
 				this.audio.PlayOneShot (this.seClips[index]);
-				Debug.Log ("もみあげ");
 			}
 
 			// 次のSE再生タイミング時間を算出
@@ -208,37 +211,25 @@ public class SoundManager : MonoBehaviour
 	****************************************************************************************/
 	private void ChangeBGMSpeedDependingOnPlayerTempo ()
 	{
-		/*
-		playerBPM = this.player.GetBPM ();
-		int waru_1 = (playerBPM / 5) * 5;
-		int waru_2 = waru_1 + 5;
-		if (Mathf.Abs (playerBPM - waru_1) < Mathf.Abs (playerBPM - waru_2)) {
-			playerBPM = waru_1;
-		} else {
-			playerBPM = waru_2;
-		}
-		*/
+		float targetSpeed = this.rhythmChecker.GetBPM () / (float)this.originalBPM;
+		targetSpeed = this.ValueToMultipleWithRound (targetSpeed, 0.1f);
 
-		//float playerBPMf = Mathf.Max (playerBPM, 1.0f);
-		//float speed = Mathf.Clamp (playerBPMf / this.bpm, this.playSpeedMin, this.playSpeedMax);
-		float speed = this.player.GetBPM () / (float)this.bpm;
-		int num1 = (int)(speed * 100);
-		int num2 = num1 % 10;
-		if (num2 < 5) {
-			speed = (num1 / 10) / 10.0f;
-		} else {
-			speed = (num1 / 10 + 1) / 10.0f;
-		}
-
-		c = Mathf.Lerp (c, speed, 0.01f);
-		this.audio.pitch = c;
-
-		//Debug.Log ("Player's BPM: " + this.player.BPM.ToString () + "  Speed: " + speed.ToString ());
-
+		float newPitch = Mathf.Lerp (this.audio.pitch, targetSpeed, 0.01f);
+		this.audio.pitch = Mathf.Clamp (newPitch, this.playSpeedMin, this.playSpeedMax); 
 	}
 
-	void OnGUI()
+	/************************************************************************************//**
+	倍数化関数（丸めVer.）. 渡された数値を指定された基準値の倍数になるように丸める.
+
+	@param [in]	value	対象の値
+	@param [in] divisor	基準値
+		
+	@return なし		
+	****************************************************************************************/
+	private float ValueToMultipleWithRound (float value, float divisor)
 	{
-		GUI.Label (new Rect(0, 20, 200, 50), this.audio.pitch.ToString());
-	}
+		float multiplier = value / divisor;
+		multiplier = Mathf.Round (multiplier);
+		return divisor * multiplier;
+	}	
 }
