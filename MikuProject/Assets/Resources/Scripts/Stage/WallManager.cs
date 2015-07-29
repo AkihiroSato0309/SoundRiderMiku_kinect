@@ -55,12 +55,12 @@ public class WallManager : SingletonMonoBehaviour<WallManager>
 		{
 			GameObject wall = Instantiate (this.wallPrefab);
 			wall.transform.position = new Vector3 (-this.offset.x, this.offset.y, offset.z * i);
-			wall.transform.parent = this.transform.parent;
+			wall.transform.parent = this.transform;
 			this.leftWalls.Add (wall);
 
 			wall = Instantiate (this.wallPrefab);
 			wall.transform.position = new Vector3 (this.offset.x, this.offset.y, offset.z * i);
-			wall.transform.parent = this.transform.parent;
+			wall.transform.parent = this.transform;
 			this.rightWalls.Add (wall);
 		}
 	}
