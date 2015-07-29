@@ -131,7 +131,8 @@
     <waitProcessExitting>false</waitProcessExitting>
     <pmxAssetPath>Assets/Resources/Models/MMD/latMiku/LatMikuVer2.31_Normal.pmd</pmxAssetPath>
     <vmdAssetPathList>
-      <string>Assets/Resources/Models/MMD/latMiku/walk.vmd</string>
+      <string>Assets/Resources/Models/MMD/WAVEFILE_fullver/wavefile_full_lat.vmd</string>
+      <string>Assets/Resources/Models/MMD/WAVEFILE_fullver/Idle.vmd</string>
     </vmdAssetPathList>
     <fbxOutputPath>Assets/Resources/Models/MMD/latMiku/LatMikuVer2.31_Normal.fbx</fbxOutputPath>
     <useWineFlag>false</useWineFlag>

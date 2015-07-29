@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: f51e57d753d6966469e02a384cd9566b
-timeCreated: 1437978177
+timeCreated: 1438079162
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
@@ -281,7 +281,8 @@ ModelImporter:
     400272: U_Char_1
     4300000: U_Char_0
     4300002: U_Char_1
-    7400000: walk.vmd
+    7400000: wavefile_full_lat.vmd
+    7400002: Idle.vmd
     9500000: //RootNode
     13700000: U_Char_0
     13700002: U_Char_1
@@ -1434,7 +1435,7 @@ ModelImporter:
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
       transformModified: 1
-    armTwist: .50999999
+    armTwist: .5
     foreArmTwist: .5
     upperLegTwist: .5
     legTwist: .5
