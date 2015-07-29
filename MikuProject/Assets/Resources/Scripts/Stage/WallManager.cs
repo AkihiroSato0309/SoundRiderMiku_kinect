@@ -48,7 +48,7 @@ public class WallManager : SingletonMonoBehaviour<WallManager>
 		// シングルトンになるように削除を行う.
 		if (base.MakeIntoSingleton ()) return;
 
-		// プレイヤーの取得. ワープ判定に使う.
+		// プレイヤーのTransformの取得. ワープ判定に使う.
 		this.playerTransform = GameObject.FindWithTag ("Player").transform;
 
 		// 壁生成準備.

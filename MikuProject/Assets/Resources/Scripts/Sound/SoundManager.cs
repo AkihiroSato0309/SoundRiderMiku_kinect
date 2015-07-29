@@ -25,7 +25,7 @@ using System.Collections.Generic;
 	
 ***************************************************************************************************/
 [RequireComponent(typeof(AudioSource))]
-public class SoundManager : MonoBehaviour
+public class SoundManager : SingletonMonoBehaviour<SoundManager>
 {
 	// --------------- inspector ---------------
 	[SerializeField]

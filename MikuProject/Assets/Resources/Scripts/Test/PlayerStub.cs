@@ -17,7 +17,7 @@ public class PlayerStub : MonoBehaviour
 
 	void Update()
 	{
-		Vector3 newPos = new Vector3 (this.transform.position.x, this.transform.position.x, this.soundManager.Time * speed);
+		Vector3 newPos = new Vector3 (this.transform.position.x, this.transform.position.y, this.soundManager.Time * speed);
 		this.transform.position = newPos;
 
 		if (Input.GetKeyDown (KeyCode.Space))
