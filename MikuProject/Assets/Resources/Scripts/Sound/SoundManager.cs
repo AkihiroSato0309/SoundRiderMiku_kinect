@@ -200,7 +200,7 @@ public class SoundManager : MonoBehaviour
 			this.nextSubBeatTime += SubBeatFreq;
 
 			// ログ出力
-			Debug.Log ("Sub Beat! (" + realTime.ToString("F3") + " sec) " + "  誤差: " + (realTime - nextTime).ToString () + " sec");
+			//Debug.Log ("Sub Beat! (" + realTime.ToString("F3") + " sec) " + "  誤差: " + (realTime - nextTime).ToString () + " sec");
 		}
 	}
 
