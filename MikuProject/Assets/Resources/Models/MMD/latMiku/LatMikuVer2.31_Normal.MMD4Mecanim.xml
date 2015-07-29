@@ -79,7 +79,7 @@
     <morphOppaiFlag>0</morphOppaiFlag>
     <morphOppaiTanimaMethod>0</morphOppaiTanimaMethod>
     <morphOppaiPower>0.5</morphOppaiPower>
-    <morphOppaiCenter>0.6</morphOppaiCenter>
+    <morphOppaiCenter>0.60000002384185791</morphOppaiCenter>
     <morphOppaiRaidus>1</morphOppaiRaidus>
     <morphOppaiBoneName1>上半身</morphOppaiBoneName1>
     <morphOppaiBoneName2>首</morphOppaiBoneName2>
@@ -131,8 +131,7 @@
     <waitProcessExitting>false</waitProcessExitting>
     <pmxAssetPath>Assets/Resources/Models/MMD/latMiku/LatMikuVer2.31_Normal.pmd</pmxAssetPath>
     <vmdAssetPathList>
-      <string>Assets/Resources/Models/MMD/WAVEFILE_fullver/wavefile_full_lat.vmd</string>
-      <string>Assets/Resources/Models/MMD/WAVEFILE_fullver/Idle.vmd</string>
+      <string>Assets/Resources/Models/MMD/Aanimation/Idle.vmd</string>
     </vmdAssetPathList>
     <fbxOutputPath>Assets/Resources/Models/MMD/latMiku/LatMikuVer2.31_Normal.fbx</fbxOutputPath>
     <useWineFlag>false</useWineFlag>
@@ -160,6 +159,123 @@
     <addLightToonMin>0.5</addLightToonMin>
     <autoLuminous>Disable</autoLuminous>
     <autoLuminousPower>5</autoLuminousPower>
-    <materialProperyList />
+    <materialProperyList>
+      <MaterialProperty>
+        <materialName>0.huku3.bmp</materialName>
+        <isProcessing>true</isProcessing>
+      </MaterialProperty>
+      <MaterialProperty>
+        <materialName>1.huku3.bmp</materialName>
+        <isProcessing>true</isProcessing>
+      </MaterialProperty>
+      <MaterialProperty>
+        <materialName>2.huku3.bmp</materialName>
+        <isProcessing>true</isProcessing>
+      </MaterialProperty>
+      <MaterialProperty>
+        <materialName>3.huku1.bmp</materialName>
+        <isProcessing>true</isProcessing>
+      </MaterialProperty>
+      <MaterialProperty>
+        <materialName>4.huku1.bmp</materialName>
+        <isProcessing>true</isProcessing>
+      </MaterialProperty>
+      <MaterialProperty>
+        <materialName>5.huku3.bmp</materialName>
+        <isProcessing>true</isProcessing>
+      </MaterialProperty>
+      <MaterialProperty>
+        <materialName>6.kami.bmp</materialName>
+        <isProcessing>true</isProcessing>
+      </MaterialProperty>
+      <MaterialProperty>
+        <materialName>7.huku3.bmp</materialName>
+        <isProcessing>true</isProcessing>
+      </MaterialProperty>
+      <MaterialProperty>
+        <materialName>8.huku3.bmp</materialName>
+        <isProcessing>true</isProcessing>
+      </MaterialProperty>
+      <MaterialProperty>
+        <materialName>9.huku3.bmp</materialName>
+        <isProcessing>true</isProcessing>
+      </MaterialProperty>
+      <MaterialProperty>
+        <materialName>10.huku3.bmp</materialName>
+        <isProcessing>true</isProcessing>
+      </MaterialProperty>
+      <MaterialProperty>
+        <materialName>11.huku3.bmp</materialName>
+        <isProcessing>true</isProcessing>
+      </MaterialProperty>
+      <MaterialProperty>
+        <materialName>12.kami.bmp</materialName>
+        <isProcessing>true</isProcessing>
+      </MaterialProperty>
+      <MaterialProperty>
+        <materialName>13.kami_ol.bmp</materialName>
+        <isProcessing>true</isProcessing>
+      </MaterialProperty>
+      <MaterialProperty>
+        <materialName>14.kami.bmp</materialName>
+        <isProcessing>true</isProcessing>
+      </MaterialProperty>
+      <MaterialProperty>
+        <materialName>15.heltudofon.bmp</materialName>
+        <isProcessing>true</isProcessing>
+      </MaterialProperty>
+      <MaterialProperty>
+        <materialName>16.huku3.bmp</materialName>
+        <isProcessing>true</isProcessing>
+      </MaterialProperty>
+      <MaterialProperty>
+        <materialName>17.huku3w.bmp</materialName>
+        <isProcessing>true</isProcessing>
+      </MaterialProperty>
+      <MaterialProperty>
+        <materialName>18.huku3w.bmp</materialName>
+        <isProcessing>true</isProcessing>
+      </MaterialProperty>
+      <MaterialProperty>
+        <materialName>19.me.bmp</materialName>
+        <isProcessing>true</isProcessing>
+      </MaterialProperty>
+      <MaterialProperty>
+        <materialName>20.hoho.png</materialName>
+        <isProcessing>true</isProcessing>
+      </MaterialProperty>
+      <MaterialProperty>
+        <materialName>21</materialName>
+        <isProcessing>true</isProcessing>
+      </MaterialProperty>
+      <MaterialProperty>
+        <materialName>22</materialName>
+        <isProcessing>true</isProcessing>
+      </MaterialProperty>
+      <MaterialProperty>
+        <materialName>23</materialName>
+        <isProcessing>true</isProcessing>
+      </MaterialProperty>
+      <MaterialProperty>
+        <materialName>24</materialName>
+        <isProcessing>true</isProcessing>
+      </MaterialProperty>
+      <MaterialProperty>
+        <materialName>25.huku1.bmp</materialName>
+        <isProcessing>true</isProcessing>
+      </MaterialProperty>
+      <MaterialProperty>
+        <materialName>26.huku3.bmp</materialName>
+        <isProcessing>true</isProcessing>
+      </MaterialProperty>
+      <MaterialProperty>
+        <materialName>27.huku1.bmp</materialName>
+        <isProcessing>true</isProcessing>
+      </MaterialProperty>
+      <MaterialProperty>
+        <materialName>28.huku1.bmp</materialName>
+        <isProcessing>true</isProcessing>
+      </MaterialProperty>
+    </materialProperyList>
   </mmd4MecanimProperty>
 </PMX2FBXConfig>
