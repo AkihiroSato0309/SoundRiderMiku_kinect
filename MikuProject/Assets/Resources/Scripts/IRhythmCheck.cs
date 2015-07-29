@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-interface IRhythmCheck{
-	int GetBPM();
+interface IRhythmCheck
+{
+	int GetBPM ();
 }
