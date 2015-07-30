@@ -20,20 +20,17 @@ public class ObstacleGenerator : MonoBehaviour
 {
 	// --------------- inspector ---------------
 	[SerializeField]
-	GameObject obstaclePrefab;		// 生成する背景装飾オブジェクトのプレハブ.
+	GameObject obstaclePrefab;			// 生成する背景装飾オブジェクトのプレハブ.
 	[SerializeField]
-	float generationPerSec;			// 一秒に何回生成するか
+	float distance = 50;				// プレイヤーがここに設定された距離を進む度に, 生成が行われる.
 	[SerializeField]
-	int instantiationPerGeneration;	// 一度の生成でいくつインスタンスを作るか
-	[SerializeField]
-	int initialGenerationNum;		// Startで何度生成を行うか
-	[SerializeField]
-	float generationDepth;			// 生成時の奥行きの範囲
-	
+	int instantiationPerGeneration = 5;	// 一度の生成でいくつインスタンスを作るか.
+
 	// --------------- private ---------------
-	Transform playerTransform;	// プレイヤーのTransform
-	Timer timer;				// タイマー
-	int generationCount = 0;	// 生成した回数
+	const int initialNum = 5;	// Startで何度生成を行うか.
+	Transform playerTransform;	// プレイヤーのTransform.
+	float nextLine = 0;			// 次の生成発生地点のZ座標
+	float posOffsetZ = 0;		// 生成するインスタンスのZ座標に対するオフセット.
 	
 	
 	/************************************************************************************//**
@@ -43,24 +40,15 @@ public class ObstacleGenerator : MonoBehaviour
 	****************************************************************************************/
 	void Start()
 	{
-		// generationPerSecはゼロであってはいけない（ゼロ除算が発生するため）
-		if (this.generationPerSec == 0)
-		{
-			this.generationPerSec = -1;
-			Debug.LogError ("RandomGenerator.generationPerSec must not be 0.0f.");
-		}
-		
 		// プレイヤーのTransformの取得.
 		this.playerTransform = GameObject.FindWithTag ("Player").transform;
-		
-		// タイマーの初期化
-		this.timer = new Timer (1 / this.generationPerSec, this.Generate);
 
-		// 初期生成
-		for (int i = 0; i < this.initialGenerationNum; i++)
+		// 初期生成.
+		for (int i = 0; i < initialNum; i++)
 		{
 			this.Generate ();
 		}
+		this.nextLine -= (this.distance * initialNum);	// 初期生成によってずれた分を修正
 	}
 	
 	/************************************************************************************//**
@@ -70,7 +58,11 @@ public class ObstacleGenerator : MonoBehaviour
 	****************************************************************************************/
 	void Update()
 	{
-		this.timer.Update ();
+		if (this.playerTransform.position.z > this.nextLine)
+		{
+			Debug.Log ("Generate (" + this.nextLine.ToString() +")");
+			Generate ();
+		}
 	}
 
 	/************************************************************************************//**
@@ -84,8 +76,8 @@ public class ObstacleGenerator : MonoBehaviour
 		{
 			this.InstantiateRandomly ();
 		}
-
-		++this.generationCount;
+		this.nextLine += this.distance;
+		this.posOffsetZ += this.distance;
 	}
 
 	/************************************************************************************//**
@@ -95,15 +87,14 @@ public class ObstacleGenerator : MonoBehaviour
 	****************************************************************************************/
 	void InstantiateRandomly()
 	{
-		// 座標算出
-		float offsetZ = this.generationCount * this.generationDepth;
+		// 座標算出.
 		float x = Random.Range (0, WallManager.Inst.RoadWidth) - (WallManager.Inst.RoadWidth / 2);
 		float y = playerTransform.position.y;
-		float z = Random.Range (0, this.generationDepth) + offsetZ;
+		float z = Random.Range (0, this.distance) + this.posOffsetZ;
 		var pos = new Vector3 (x, y, z);
 
-		// インスタンス化と, インスタンスの初期化
-		var obstacle = Instantiate (obstaclePrefab, pos, Quaternion.identity) as GameObject;
+		// インスタンス化と, インスタンスの初期化.
+		var obstacle = Instantiate (this.obstaclePrefab, pos, Quaternion.identity) as GameObject;
 		obstacle.AddComponent<AutoDestroyBehindPlayer> ();
 		obstacle.transform.parent = this.transform;
 	}

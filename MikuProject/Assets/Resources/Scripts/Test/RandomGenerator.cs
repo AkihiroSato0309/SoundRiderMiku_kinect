@@ -27,7 +27,7 @@ public class RandomGenerator : MonoBehaviour
 			Debug.LogError ("RandomGenerator.generationPerSec must not be 0.0f.");
 		}
 
-		this.timer = new Timer (1 / this.generationPerSec, this.Generate);
+		this.timer = new TimerWithSoundManager (1 / this.generationPerSec, this.Generate);
 	}
 	
 	// Update is called once per frame
