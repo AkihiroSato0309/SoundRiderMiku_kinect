@@ -42,7 +42,7 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
 	// --------------- private ---------------
 	private AudioSource audio;						// 親オブジェクトにアタッチされたAudioSource.
 	private IRhythmCheck rhythmChecker;				// プレイヤーのリズムを取得するオブジェクト
-	private float originalBPS;						// 原曲のBPS (beat per second).
+	private float originalBPS;						// 曲の元のBPS (beat per second).
 	private double subBeatFreq;						// サブビートの頻度.
 	private double nextSubBeatTime = 0;				// 次のサブビートのタイミング
 	private float prevPlayingTime = 0;				// 音声ファイルの前フレームにおける再生時間（再生地点）.
@@ -52,10 +52,10 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
 	private Queue<SE> waitingSounds;				// 再生待機中のサウンド.
 	
 	// --------------- property ---------------
-	public float Time { get { return this.audio.time; } }
-	public float DeltaTime { get { return this.deltaTime; } }
-	public float OriginalBPS { get { return this.originalBPS; } }
-	public float SubBeatFreq { get { return (float)this.subBeatFreq; } }
+	public float Time { get { return this.audio.time; } }					// 現在のBGMの再生時間（再生地点）
+	public float DeltaTime { get { return this.deltaTime; } }				// 前フレームからどれだけ再生時間が進んだか
+	public float OriginalBPS { get { return this.originalBPS; } }			// 曲の元のBPS (beat per second)
+	public float SubBeatFreq { get { return (float)this.subBeatFreq; } }	// サブビートの発生頻度（単位：秒）
 
 
 	/************************************************************************************//**
@@ -71,11 +71,10 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
 		// enum SEとファイルパスを関連づける.
 		const string folderPath = @"Sounds/SE/";
 		this.seClipPathes.Add (SE.Test, folderPath + "SampleSE");
-		this.seClipPathes.Add (SE.Jump, folderPath + "Jumping");
-		this.seClipPathes.Add (SE.Landing, folderPath + "Landing");
-		this.seClipPathes.Add (SE.Trick, folderPath + "Trick");
-		this.seClipPathes.Add (SE.Combo, folderPath + "Combo");
-		this.seClipPathes.Add (SE.Star, folderPath + "Star");
+		this.seClipPathes.Add (SE.Foot, folderPath + "Foot");
+		this.seClipPathes.Add (SE.HitEnemy, folderPath + "HitEnemy");
+		this.seClipPathes.Add (SE.DestroyEnemy, folderPath + "DestroyEnemy");
+		this.seClipPathes.Add (SE.HitWall, folderPath + "HitWall");
 
 		// 全てのenum SEの要素と, ファイルパスが関連づいているか, 確認.
 		SE[] elements = System.Enum.GetValues(typeof(SE)) as SE[];
@@ -90,7 +89,7 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
 	}
 
 	/************************************************************************************//**
-	開始. 上位のオブジェクトであるため, StartではなくAwakeで処理.
+	開始.
 		
 	@return なし		
 	****************************************************************************************/
