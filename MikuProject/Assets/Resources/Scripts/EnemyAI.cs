@@ -12,6 +12,7 @@ public class EnemyAI : MonoBehaviour {
 	private float speed = 0.3f;
 
 	private Vector3 basePos;
+	private Vector3 prevPos;
 	private Action updateFunc;
 
 	// Use this for initialization
@@ -24,7 +25,6 @@ public class EnemyAI : MonoBehaviour {
 	void Update () 
 	{
 		updateFunc ();
-		Debug.Log (SoundManager.Inst.DeltaTime);
 	}
 
 	void InterUpdate()
