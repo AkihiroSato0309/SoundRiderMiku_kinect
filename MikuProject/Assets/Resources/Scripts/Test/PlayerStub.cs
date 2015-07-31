@@ -22,7 +22,7 @@ public class PlayerStub : MonoBehaviour
 
 		if (Input.GetKeyDown (KeyCode.Space))
 		{
-			this.soundManager.PlaySE (SE.Jump);
+			this.soundManager.PlaySE (SE.Foot);
 		};
 	}
 }
