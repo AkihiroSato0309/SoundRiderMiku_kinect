@@ -30,7 +30,7 @@ public class EnemyAI : MonoBehaviour {
 	void InterUpdate()
 	{
 		// 移動
-		transform.Translate (0.0f, 0.0f, -speed);
+		transform.Translate (0.0f, 0.0f, -speed, Space.World);
 		
 		Vector3 currentPos = transform.position;
 		basePos = Camera.main.transform.position;
@@ -61,6 +61,6 @@ public class EnemyAI : MonoBehaviour {
 	void RemoveUpdate()
 	{
 		// 移動
-		transform.Translate (0.0f, 0.0f, -speed);
+		transform.Translate (0.0f, 0.0f, -speed, Space.World);
 	}
 }
