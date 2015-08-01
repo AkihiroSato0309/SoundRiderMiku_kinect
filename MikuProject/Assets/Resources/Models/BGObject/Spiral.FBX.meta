@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 2b360467ca88bb84d91b606eb3094245
-timeCreated: 1438407258
+guid: a98fec51250273a4b982d35e34c5ddb0
+timeCreated: 1438407398
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
@@ -9,7 +9,7 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: Box002
+    4300000: SpiralStair002
     9500000: //RootNode
   materials:
     importMaterials: 1
