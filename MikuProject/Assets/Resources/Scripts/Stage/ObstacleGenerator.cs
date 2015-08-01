@@ -60,7 +60,7 @@ public class ObstacleGenerator : MonoBehaviour
 	{
 		if (this.playerTransform.position.z > this.nextLine)
 		{
-			Debug.Log ("Generate (" + this.nextLine.ToString() +")");
+			//Debug.Log ("Generate (" + this.nextLine.ToString() +")");
 			Generate ();
 		}
 	}
@@ -95,7 +95,6 @@ public class ObstacleGenerator : MonoBehaviour
 
 		// インスタンス化と, インスタンスの初期化.
 		var obstacle = Instantiate (this.obstaclePrefab, pos, Quaternion.identity) as GameObject;
-		obstacle.AddComponent<AutoDestroyBehindPlayer> ();
 		obstacle.transform.parent = this.transform;
 	}
 }

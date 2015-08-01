@@ -30,7 +30,8 @@ public class HandCheck : MonoBehaviour {
 	}
 
 	// 初期化処理
-	void Start () {
+	void Start () 
+	{
 		// キネクトマネージャーの取得
 		manager = KinectManager.Instance;
 	}
@@ -58,6 +59,7 @@ public class HandCheck : MonoBehaviour {
 				float tmp = shoulder2HandVec.z;
 				shoulder2HandVec.z = shoulder2HandVec.x;
 				shoulder2HandVec.x = tmp;
+				shoulder2HandVec.Normalize();
 
 				if(showShoulder2HandVecObject != null)showShoulder2HandVecObject.transform.LookAt(showShoulder2HandVecObject.transform.position + shoulder2HandVec);
 				isHandUp = true;
