@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2b360467ca88bb84d91b606eb3094245
+guid: 91f31848792b24b4c86a6a46cddfa012
 timeCreated: 1438407258
 licenseType: Free
 ModelImporter:
@@ -9,7 +9,7 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: Box002
+    4300000: Sphere001
     9500000: //RootNode
   materials:
     importMaterials: 1
