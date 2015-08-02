@@ -18,6 +18,7 @@ public class PlayerStub : MonoBehaviour
 		if (Input.GetKeyDown (KeyCode.Space))
 		{
 			SoundManager.Inst.PlaySE (SE.Foot);
+			SoundManager.Inst.MoveToNextPhase ();
 		};
 
 		if (Input.GetKey (KeyCode.A)) this.transform.Translate (-this.speedX, 0, 0);

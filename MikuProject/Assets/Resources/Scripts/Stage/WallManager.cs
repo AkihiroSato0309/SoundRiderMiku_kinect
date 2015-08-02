@@ -32,8 +32,8 @@ public class WallManager : SingletonMonoBehaviour<WallManager>
 	public float RoadWidth { get { return offset.x * 2; } }		// 形成される道幅 = 左壁と右壁間におけるX方向距離
 
 	// --------------- private ---------------
-	List<GameObject> leftWalls;		// 左の壁
-	List<GameObject> rightWalls;	// 右の壁
+	GameObject[] leftWalls;			// 左の壁
+	GameObject[] rightWalls;		// 右の壁
 	int backmostWallIndex = 0;		// 最後方にある壁を指すインデックス
 	Transform playerTransform;		// プレイヤーのTransform
 
@@ -60,8 +60,8 @@ public class WallManager : SingletonMonoBehaviour<WallManager>
 		this.transform.position = pos;
 
 		// 壁格納用コレクションの生成
-		this.leftWalls = new List<GameObject> (this.num);
-		this.rightWalls = new List<GameObject> (this.num);
+		this.leftWalls = new GameObject[this.num];
+		this.rightWalls = new GameObject[this.num];
 
 		// 壁を生成.
 		for (int i = 0; i < this.num; i++)
@@ -70,13 +70,13 @@ public class WallManager : SingletonMonoBehaviour<WallManager>
 			GameObject wall = Instantiate (this.wallPrefab);
 			wall.transform.parent = this.transform;
 			wall.transform.position = new Vector3 (-this.offset.x, this.offset.y, offset.z * i);
-			this.leftWalls.Add (wall);
+			this.leftWalls[i] = wall;
 
 			// 右の壁.
 			wall = Instantiate (this.wallPrefab);
 			wall.transform.parent = this.transform;
 			wall.transform.position = new Vector3 (this.offset.x, this.offset.y, offset.z * i);
-			this.rightWalls.Add (wall);
+			this.rightWalls[i] = wall;
 		}
 	}
 
@@ -98,8 +98,7 @@ public class WallManager : SingletonMonoBehaviour<WallManager>
 			// 左右の壁の座標を更新.
 			float x = this.offset.x;
 			float y = this.offset.y;
-			Debug.Log (this.offset.y);
-			float z = leftWall.transform.position.z + this.offset.z * this.num;
+			float z = leftWall.transform.position.z + (this.offset.z * this.num);
 			leftWall.transform.position = new Vector3 (x, y, z);
 			rightWall.transform.position = new Vector3 (-x, y, z);
 			
