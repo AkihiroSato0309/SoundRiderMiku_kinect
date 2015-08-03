@@ -389,6 +389,7 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
 
 		// 他のオブジェクトに次フェイズへの移行を通知
 		BGObjManager.Inst.MoveToNextPhase (this.currentPhase);
+		ChangeBoxGenerator.Inst.MoveToNextPhase ();
 	}
 
 	/************************************************************************************//**
