@@ -54,6 +54,9 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
 	public float OriginalBPS { get { return this.originalBPS; } }			// 曲の元のBPS (beat per second).
 	public float SubBeatFreq { get { return (float)this.subBeatFreq; } }	// サブビートの発生頻度（単位：秒）.
 
+	// --------------- private property ---------------
+	private bool IsLastPhase { get {return this.currentPhase == (bgmParts.Length - 1);} }
+
 	// --------------- private ---------------
 	AudioSource currentAudio;				// 現在使用しているAudioSource.
 	AudioSource anotherAudio;				// 現在未使用のAudioSource.
@@ -74,7 +77,7 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
 	int currentPhase = 0;					// 現在のフェイズの段階.
 	bool hasBeenOnSubBeat = false;			// サブビートが発生したタイミングかどうか.
 	bool hasStartedBar = false;				// バーが開始されたタイミングかどうか.
-	bool canPlayHindingLoopSE = true;		// ループを隠す音声を鳴らすべきかどうか.
+	bool canChangeBGMSpeed = false;			// BGMの速度の変化を有効化するかどうか.
 
 	
 	/************************************************************************************//**
@@ -97,6 +100,8 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
 		this.rhythmChecker = GameObject.Find ("RhythmCheck").GetComponent<IRhythmCheck> ();
 
 		// 必要情報の計算.
+		this.playSpeedMax = PlaySpeeds.GetNearSpeed (this.playSpeedMax);
+		this.playSpeedMin = PlaySpeeds.GetNearSpeed (this.playSpeedMin);
 		this.originalBPS = this.originalBPM / 60.0f;								// 1秒間のビート数 = 1分間のビート数 / 1分.
 		this.subBeatFreq = 1 / (this.originalBPS * this.subBeatPerBeat);			// サブビートの頻度（秒） = 1秒 / 1秒間におけるサブビートの数.
 		this.barFreq = this.SubBeatFreq * this.subBeatPerBeat * this.beatPerBar;	// 小節の頻度.
@@ -116,21 +121,18 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
 	****************************************************************************************/
 	void Update ()
 	{
-		// 再生が終わっていれば何もしない.
-		if (!this.currentAudio.isPlaying) return;
-
 		// DeltaTime, ElapsedTimeの計算
 		this.CalcDeltaAndElapsed ();
-
+		
 		// サブビートに関する処理
 		this.ProcessRegardingSubBeat ();
-
+		
 		// 小節に関する処理
 		this.ProcessRegardingBar ();
-
+		
 		// プレイヤーのテンポに合わせて再生速度を変更.
 		this.ChangeBGMSpeedDependingOnPlayerTempo ();
-
+		
 		// 次フレームでDeltaTimeを計算するために, 現在の再生時間を保存.
 		this.prevPlayingTime = this.currentAudio.time;
 	}
@@ -144,7 +146,7 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
 	{
 		GUI.Label (new Rect(0, 20, 200, 50), "Pitch: " + this.currentAudio.pitch.ToString());
 	}
-
+	
 	/************************************************************************************//**
 	SE再生. 瞬時には再生されず, まずは再生待ちキューに格納され, BGMのビートに合わせてまとめて再生される.
 		
@@ -165,6 +167,9 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
 	****************************************************************************************/
 	public void MoveToNextPhase ()
 	{
+		// 既に最後のフェイズであれば何もしない.
+		if (this.IsLastPhase) return;
+
 		this.StartCoroutine (this.ChangeBGMPart ());
 	}
 
@@ -270,8 +275,6 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
 	{
 		int barNum = (int)(this.currentAudio.clip.length / barFreq);
 		this.lastBarStartTime = elapsedTime + ((barNum - 1) * this.barFreq);
-
-		this.canPlayHindingLoopSE = true;
 	}
 
 	/************************************************************************************//**
@@ -311,11 +314,16 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
 			this.nextBarStartTime += barFreq;
 
 			// 最後の小節の開始タイミングであれば, 
-			if (this.elapsedTime > this.lastBarStartTime
-			    && this.canPlayHindingLoopSE)
+			if (this.elapsedTime > this.lastBarStartTime)
 			{
 				this.seAudio.PlayOneShot (this.cushionSE);	// ループ時の途切れを隠すためにSEを鳴らす.
-				this.canPlayHindingLoopSE = false;
+				this.lastBarStartTime += 100;				// lastBarStartTimeが再計算されることを見越して, とりあえず大きな数値を入れておく.
+
+				if (this.currentPhase == 0)
+				{
+					this.MoveToNextPhase ();
+					this.Invoke ("FinishIntro", (float)this.barFreq);
+				}
 			}
 		}
 	}
@@ -372,6 +380,12 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
 		// 最後の小節の位置を再計算
 		this.CalcLastBarStartTime ();
 
+		// 最後のフェイズであれば, アウトロー開始処理
+		if (this.IsLastPhase)
+		{
+			this.StartOutro ();
+		}
+
 		// 他のオブジェクトに次フェイズへの移行を通知
 		BGObjManager.Inst.MoveToNextPhase (this.currentPhase);
 	}
@@ -383,8 +397,11 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
 	****************************************************************************************/
 	void ChangeBGMSpeedDependingOnPlayerTempo ()
 	{
+		if (!this.canChangeBGMSpeed) return;
+
 		float targetSpeed = this.rhythmChecker.GetBPM () / (float)this.originalBPM;
-		targetSpeed = this.ValueToMultipleWithRound (targetSpeed, 0.1f);
+		targetSpeed = PlaySpeeds.GetNearSpeed (targetSpeed);
+		//targetSpeed = this.ValueToMultipleWithRound (targetSpeed, 0.1f);
 
 		float newPitch = Mathf.Lerp (this.currentAudio.pitch, targetSpeed, 0.01f);
 		this.currentAudio.pitch = Mathf.Clamp (newPitch, this.playSpeedMin, this.playSpeedMax); 
@@ -419,5 +436,27 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
 		temp = a;
 		a = b;
 		b = temp;
+	}
+	
+	/************************************************************************************//**
+	イントロ終了時.
+		
+	@return なし		
+	****************************************************************************************/
+	void FinishIntro ()
+	{
+		this.canChangeBGMSpeed = true;
+	}
+
+	/************************************************************************************//**
+	アウトロ開始時.
+		
+	@return なし		
+	****************************************************************************************/
+	void StartOutro ()
+	{
+		this.canChangeBGMSpeed = false;
+		currentAudio.pitch = 1.0f;
+		currentAudio.pitch = 1.0f;
 	}
 }
