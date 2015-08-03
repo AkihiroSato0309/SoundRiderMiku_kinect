@@ -1,15 +1,19 @@
 fileFormatVersion: 2
-guid: 2b360467ca88bb84d91b606eb3094245
+guid: a688461da3b0ace49a734bfe2a3db176
 timeCreated: 1438407258
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
   fileIDToRecycleName:
     100000: //RootNode
+    100002: Cylinder003
+    100004: Plane001
     400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: Box002
+    400002: Cylinder003
+    400004: Plane001
+    2300000: Cylinder003
+    3300000: Cylinder003
+    4300000: Cylinder003
     9500000: //RootNode
   materials:
     importMaterials: 1

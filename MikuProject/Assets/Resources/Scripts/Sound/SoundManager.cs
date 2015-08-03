@@ -10,6 +10,10 @@
 		なお, 1ビートにおけるサブビートの数が1の場合, ビートとサブビートのタイミングは完全に一致します.
 		元々BPMの高い曲では, 1ビートにおけるサブビートの数を1に設定すべきです.
 
+@note	ファイル内でフェイズ（Phase）という用語を用いています.
+		フェイズは, ゲーム内におけるシステムの1つであり, 端的に言えば, ステージの進行段階を示しています.
+		フェイズは, チェンジボックスを破壊されるか, 一定時間が経過することで次の段階へと進みます.
+
 @author Keisuke Ohe
 		
 ***************************************************************************************************/
@@ -50,6 +54,7 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
 	private Dictionary<SE, AudioClip> seClips;		// サウンドの実データ.
 	private Dictionary<SE, string> seClipPathes;	// サウンドファイルのパス.
 	private Queue<SE> waitingSounds;				// 再生待機中のサウンド.
+	private int currentPhase = 0;					// 現在のフェイズの段階
 	
 	// --------------- property ---------------
 	public float Time { get { return this.audio.time; } }					// 現在のBGMの再生時間（再生地点）
@@ -154,6 +159,16 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
 	{
 		LoadSEIfNecessary (se);
 		waitingSounds.Enqueue (se);
+	}
+
+	/************************************************************************************//**
+	フェイズを次の段階へと進める.
+	
+	@return なし		
+	****************************************************************************************/
+	public void MoveToNextPhase ()
+	{
+		BGObjManager.Inst.MoveToNextPhase (++this.currentPhase);
 	}
 
 	/************************************************************************************//**
