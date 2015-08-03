@@ -11,6 +11,8 @@ public class EnemyAI : MonoBehaviour {
 	[SerializeField]
 	private float speed = 0.3f;
 
+	public GameObject explosionParticle;
+
 	private Vector3 basePos;
 	private Vector3 prevPos;
 	private Action updateFunc;
@@ -83,6 +85,9 @@ public class EnemyAI : MonoBehaviour {
 		// 弾に当たった時の処理
 		if (col.gameObject.tag == "Bullet") 
 		{
+			// 音を鳴らす
+			SoundManager.Inst.PlaySE (SE.HitEnemy);
+
 			// 停止させる
 			updateFunc = FollowPlayer;
 
@@ -96,6 +101,8 @@ public class EnemyAI : MonoBehaviour {
 	
 	public void Death()
 	{
+		SoundManager.Inst.PlaySE (SE.DestroyEnemy);
+		GameObject.Instantiate (explosionParticle, transform.position, Quaternion.identity);
 		Destroy (gameObject);
 	}
 }
