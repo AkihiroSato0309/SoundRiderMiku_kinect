@@ -14,10 +14,14 @@ public class EnemyAI : MonoBehaviour {
 	private Vector3 basePos;
 	private Vector3 prevPos;
 	private Action updateFunc;
+	private float wateDistance;
+
+	private Animator controller;
 
 	// Use this for initialization
 	void Start () 
 	{
+		controller = GetComponent<Animator> ();
 		updateFunc = InterUpdate;
 	}
 	
@@ -39,18 +43,15 @@ public class EnemyAI : MonoBehaviour {
 		{
 			currentPos.z = worldWatePosZ;
 			transform.position = currentPos;
+			wateDistance = waitSpace;
 			updateFunc = WaitUpdate;
 		}
 	}
 
 	void WaitUpdate()
 	{
-		Vector3 basePos = Camera.main.transform.position;
-		//Vector3 basePos = GameObject.FindWithTag("Player").transform.position;
-		Vector3 currentPos = transform.position;
-		currentPos.z = basePos.z + waitSpace;
 		// プレイヤーと並走する
-		transform.position = currentPos;
+		FollowPlayer ();
 
 		// 時間を減らす
 		waitTime -= Time.deltaTime;
@@ -62,5 +63,39 @@ public class EnemyAI : MonoBehaviour {
 	{
 		// 移動
 		transform.Translate (0.0f, 0.0f, -speed, Space.World);
+
+		controller = GetComponent<Animator> ();
+	}
+
+	// 並走処理
+	void FollowPlayer()
+	{
+		// プレイヤーと並走する
+		Vector3 basePos = Camera.main.transform.position;
+		Vector3 currentPos = transform.position;
+		currentPos.z = basePos.z + wateDistance;
+		transform.position = currentPos;
+	}
+
+	void OnTriggerEnter(Collider col)
+	{
+		print ("unti");
+		// 弾に当たった時の処理
+		if (col.gameObject.tag == "Bullet") 
+		{
+			// 停止させる
+			updateFunc = FollowPlayer;
+
+			// 並走距離（カメラとの距離）を設定
+			wateDistance = transform.position.z - Camera.main.transform.position.z;
+
+			controller.SetTrigger("isDeath");
+		}
+		
+	}
+	
+	public void Death()
+	{
+		Destroy (gameObject);
 	}
 }

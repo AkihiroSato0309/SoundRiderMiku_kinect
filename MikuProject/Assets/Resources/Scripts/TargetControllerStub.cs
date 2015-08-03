@@ -20,7 +20,6 @@ public class TargetControllerStub : MonoBehaviour, ITargetController {
 
 	public Vector2 GetTargetPosition()
 	{
-		print ("orwari");
 		return targetPos;
 	}
 

@@ -27,7 +27,6 @@ public class TargetController : MonoBehaviour, ITargetController {
 
 	public Vector2 GetTargetPosition()
 	{
-		//print (targetPos);
 		return targetPos;
 	}
 }
