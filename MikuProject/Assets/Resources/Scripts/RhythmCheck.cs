@@ -25,8 +25,8 @@ public class RhythmCheck : MonoBehaviour, IRhythmCheck{
 	public GameObject checkObject;
 	public KinectInterop.JointType checkBodyType = KinectInterop.JointType.Head;		// どの位置でリズムをとるか
 
-	public int rhythmCalcNum = 5;	// リズムの平均値を求める際に使用するタイムの個数
-	public float initBPM = 60.0f;
+	public int rhythmCalcNum = 2;	// リズムの平均値を求める際に使用するタイムの個数
+	public float initBPM = 135.0f;
 
 	public int checkObjectPosYNum = 60;
 
