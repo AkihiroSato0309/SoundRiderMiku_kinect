@@ -1,0 +1,249 @@
+fileFormatVersion: 2
+guid: 6ec6951bb936ea0408240c2ab1b8163a
+timeCreated: 1438570871
+licenseType: Free
+ModelImporter:
+  serializedVersion: 18
+  fileIDToRecycleName:
+    100000: Body
+    100002: body
+    100004: Body_Ctrl
+    100006: //RootNode
+    100008: Head
+    100010: L_Claw_1
+    100012: L_Claw_1 1
+    100014: L_Claw_1 2
+    100016: L_Claw_2
+    100018: L_Claw_2 1
+    100020: L_Claw_2 2
+    100022: L_Claw_3
+    100024: L_Claw_3 1
+    100026: L_Claw_3 2
+    100028: L_Claw_Joint_1
+    100030: L_Claw_Joint_2
+    100032: L_Claw_Joint_3
+    100034: L_Claw_Tip_1
+    100036: L_Claw_Tip_2
+    100038: L_Claw_Tip_3
+    100040: L_Elbow
+    100042: L_Elbow_Ctrl
+    100044: L_Hand
+    100046: L_Hand1
+    100048: L_Hands
+    100050: L_Shoulder
+    100052: L_Shoulder_Ctrl
+    100054: Main_Ctrl
+    100056: pCube5
+    100058: pCube6
+    100060: pCube8
+    100062: pCube9
+    100064: pCylinder10
+    100066: pCylinder11
+    100068: pCylinder16
+    100070: pCylinder17
+    100072: pCylinder18
+    100074: pCylinder19
+    100076: pCylinder20
+    100078: pCylinder21
+    100080: pCylinder22
+    100082: pCylinder6
+    100084: pCylinder7
+    100086: pCylinder8
+    100088: pCylinder9
+    100090: polySurface1
+    100092: polySurface2
+    100094: R_Claw_1
+    100096: R_Claw_2
+    100098: R_Claw_3
+    100100: R_Claw_Joint_1
+    100102: R_Claw_Joint_2
+    100104: R_Claw_Joint_3
+    100106: R_Claw_Tip_1
+    100108: R_Claw_Tip_2
+    100110: R_Claw_Tip_3
+    100112: R_Elbow
+    100114: R_Elbow_Ctrl
+    100116: R_Hands
+    100118: R_Shoulder
+    100120: R_Shoulder_Ctrl
+    100122: transform1
+    100124: transform10
+    100126: transform11
+    100128: transform12
+    100130: transform13
+    100132: transform14
+    100134: transform15
+    100136: transform2
+    100138: transform21
+    100140: transform22
+    100142: transform23
+    100144: transform24
+    100146: transform3
+    100148: transform4
+    100150: transform5
+    100152: transform6
+    100154: transform7
+    100156: transform8
+    100158: transform9
+    400000: Body
+    400002: body
+    400004: Body_Ctrl
+    400006: //RootNode
+    400008: Head
+    400010: L_Claw_1
+    400012: L_Claw_1 1
+    400014: L_Claw_1 2
+    400016: L_Claw_2
+    400018: L_Claw_2 1
+    400020: L_Claw_2 2
+    400022: L_Claw_3
+    400024: L_Claw_3 1
+    400026: L_Claw_3 2
+    400028: L_Claw_Joint_1
+    400030: L_Claw_Joint_2
+    400032: L_Claw_Joint_3
+    400034: L_Claw_Tip_1
+    400036: L_Claw_Tip_2
+    400038: L_Claw_Tip_3
+    400040: L_Elbow
+    400042: L_Elbow_Ctrl
+    400044: L_Hand
+    400046: L_Hand1
+    400048: L_Hands
+    400050: L_Shoulder
+    400052: L_Shoulder_Ctrl
+    400054: Main_Ctrl
+    400056: pCube5
+    400058: pCube6
+    400060: pCube8
+    400062: pCube9
+    400064: pCylinder10
+    400066: pCylinder11
+    400068: pCylinder16
+    400070: pCylinder17
+    400072: pCylinder18
+    400074: pCylinder19
+    400076: pCylinder20
+    400078: pCylinder21
+    400080: pCylinder22
+    400082: pCylinder6
+    400084: pCylinder7
+    400086: pCylinder8
+    400088: pCylinder9
+    400090: polySurface1
+    400092: polySurface2
+    400094: R_Claw_1
+    400096: R_Claw_2
+    400098: R_Claw_3
+    400100: R_Claw_Joint_1
+    400102: R_Claw_Joint_2
+    400104: R_Claw_Joint_3
+    400106: R_Claw_Tip_1
+    400108: R_Claw_Tip_2
+    400110: R_Claw_Tip_3
+    400112: R_Elbow
+    400114: R_Elbow_Ctrl
+    400116: R_Hands
+    400118: R_Shoulder
+    400120: R_Shoulder_Ctrl
+    400122: transform1
+    400124: transform10
+    400126: transform11
+    400128: transform12
+    400130: transform13
+    400132: transform14
+    400134: transform15
+    400136: transform2
+    400138: transform21
+    400140: transform22
+    400142: transform23
+    400144: transform24
+    400146: transform3
+    400148: transform4
+    400150: transform5
+    400152: transform6
+    400154: transform7
+    400156: transform8
+    400158: transform9
+    4300000: Body
+    4300002: L_Hand
+    4300004: L_Claw_1
+    4300006: L_Claw_2
+    4300008: L_Claw_3
+    4300010: L_Hand1
+    4300012: L_Claw_1
+    4300014: L_Claw_2
+    4300016: L_Claw_3
+    7400000: Take 001
+    9500000: //RootNode
+    13700000: Body
+    13700002: L_Claw_1
+    13700004: L_Claw_1 1
+    13700006: L_Claw_2
+    13700008: L_Claw_2 1
+    13700010: L_Claw_3
+    13700012: L_Claw_3 1
+    13700014: L_Hand
+    13700016: L_Hand1
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 30
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

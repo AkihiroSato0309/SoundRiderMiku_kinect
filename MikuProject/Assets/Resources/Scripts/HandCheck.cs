@@ -53,7 +53,7 @@ public class HandCheck : MonoBehaviour {
 			if((handPos - shoulderPos).magnitude > checkRangeShoulderToHand &&
 			   handPos.y > (shoulderPos.y - checkUnderDistance))
 			{
-				print ("肩");
+				//print ("肩");
 				shoulder2HandVec = handPos - shoulderPos;
 
 				float tmp = shoulder2HandVec.z;
