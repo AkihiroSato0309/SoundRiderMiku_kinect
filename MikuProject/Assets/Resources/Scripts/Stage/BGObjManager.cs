@@ -73,9 +73,11 @@ public class BGObjManager : SingletonMonoBehaviour<BGObjManager>
 	****************************************************************************************/
 	public void MoveToNextPhase (int nextPhase)
 	{
+		if (nextPhase <= 1) return;
+
 		foreach (var bgObj in this.bgObjs)
 		{
-			bgObj.MoveToNextPhase (nextPhase);
+			bgObj.MoveToNextPhase (nextPhase - 1);
 		}
 	}
 

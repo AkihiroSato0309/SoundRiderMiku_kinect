@@ -25,7 +25,7 @@ public class ObstacleGenerator : MonoBehaviour
 	float distance = 50;				// プレイヤーがここに設定された距離を進む度に, 生成が行われる.
 	[SerializeField]
 	int instantiationPerGeneration = 5;	// 一度の生成でいくつインスタンスを作るか.
-
+	
 	// --------------- private ---------------
 	const int initialNum = 5;	// Startで何度生成を行うか.
 	Transform playerTransform;	// プレイヤーのTransform.
@@ -40,15 +40,21 @@ public class ObstacleGenerator : MonoBehaviour
 	****************************************************************************************/
 	void Start()
 	{
-		// プレイヤーのTransformの取得.
-		this.playerTransform = GameObject.FindWithTag ("Player").transform;
+		// プレイヤー情報の取得.
+		var player = GameObject.FindWithTag ("Player");
+		//var playerScript = player.GetComponent<PlayerStub> ();
+		this.playerTransform = player.transform;
+
+		// イントロ中は障害物が発生しないように, 生成位置オフセットと生成発生地点をずらす.
+		this.posOffsetZ = 10 * SoundManager.Inst.IntroLength;
+		this.nextLine = this.posOffsetZ;
 
 		// 初期生成.
 		for (int i = 0; i < initialNum; i++)
 		{
 			this.Generate ();
 		}
-		this.nextLine -= (this.distance * initialNum);	// 初期生成によってずれた分を修正
+		this.nextLine -= (this.distance * initialNum);	// 初期生成でずれた分を修正
 	}
 	
 	/************************************************************************************//**

@@ -31,7 +31,6 @@ public class ColorFluctuationOnBeat : BaseBeatBehaviour
 	delegate float Interpolation(float t);
 	Material material;
 	int subBeatCount = 0;	// サブビートの発生回数を数える
-	bool isUp = false;		// trueでfrom->to, falseでto->from
 
 
 	/************************************************************************************//**
