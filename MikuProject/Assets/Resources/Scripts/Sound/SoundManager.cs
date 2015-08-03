@@ -53,6 +53,7 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
 	public float DeltaTime { get { return this.deltaTime; } }				// 前フレームからどれだけ再生時間が進んだか.
 	public float OriginalBPS { get { return this.originalBPS; } }			// 曲の元のBPS (beat per second).
 	public float SubBeatFreq { get { return (float)this.subBeatFreq; } }	// サブビートの発生頻度（単位：秒）.
+	public float IntroLength { get { return bgmParts[0].length; } }			// イントロの長さ
 
 	// --------------- private property ---------------
 	private bool IsLastPhase { get {return this.currentPhase == (bgmParts.Length - 1);} }
