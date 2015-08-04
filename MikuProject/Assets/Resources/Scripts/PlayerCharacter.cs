@@ -14,6 +14,7 @@ public class PlayerCharacter : MonoBehaviour, IPlayerCharacter {
 
 	private float moveLimit;
 	private float movePointX;
+	private float rotatePointY;
 	private SoundManager soundManager;
 
 	/************************************************************************************//**
@@ -63,9 +64,20 @@ public class PlayerCharacter : MonoBehaviour, IPlayerCharacter {
 	****************************************************************************************/
 	void Move()
 	{
+		// 横軸の差異を保存
+		float deffX = this.transform.position.x;
 		Vector3 newPos = new Vector3 (this.transform.position.x, this.transform.position.y, this.soundManager.Time * speed);
+
+		// 補間をかける
 		newPos.x = Mathf.Lerp (newPos.x, movePointX, turnSmooth);
 		this.transform.position = newPos;
+
+		// ボードを回転させる
+		deffX -= newPos.x;
+		deffX *= -1.0f;
+		rotatePointY = 100.0f * deffX;
+		Quaternion rot = Quaternion.identity * Quaternion.AngleAxis (rotatePointY, Vector3.up);
+		transform.rotation = rot;
 	}
 
 	/************************************************************************************//**
@@ -74,7 +86,7 @@ public class PlayerCharacter : MonoBehaviour, IPlayerCharacter {
 	@param 移動方向
 	@return なし		
 	****************************************************************************************/
-	void MoveSlide(float moveX)
+	public void MoveSlide(float moveX)
 	{
 		movePointX = transform.position.x + moveX;
 	}
@@ -84,7 +96,7 @@ public class PlayerCharacter : MonoBehaviour, IPlayerCharacter {
 		
 	@return 基底スピード
 	****************************************************************************************/
-	float GetSpeed()
+	public float GetSpeed()
 	{
 		return speed;
 	}

@@ -3,6 +3,7 @@ using System.Collections;
 
 public class ShockWave : MonoBehaviour {
 
+	[SerializeField]
 	private float lifeTime = 0.5f;
 
 	// Use this for initialization

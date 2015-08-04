@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(PlayerCharacter))]
 public class SlideCheck : MonoBehaviour {
 
-	public float moveSpeed = 0.1f;
+	public float moveSpeed = 1.0f;
 
 	private KinectManager manager;
 
@@ -12,10 +13,15 @@ public class SlideCheck : MonoBehaviour {
 
 	private float depthDeff;
 
+	private PlayerCharacter playerChara;
+
 	// 初期化処理
 	void Start () {
 		// キネクトマネージャーの取得
 		manager = KinectManager.Instance;
+
+		// プレイヤーのスクリプトを取得
+		playerChara = GetComponent<PlayerCharacter> ();
 	}
 
 	
@@ -33,7 +39,7 @@ public class SlideCheck : MonoBehaviour {
 			// 差を計算
 			depthDeff = footRightPos.z - footLeftPos.z;
 		}
-
-		transform.Translate (depthDeff * moveSpeed, 0.0f, 0.0f);
+		print (depthDeff);
+		playerChara.MoveSlide (depthDeff * moveSpeed);
 	}
 }
