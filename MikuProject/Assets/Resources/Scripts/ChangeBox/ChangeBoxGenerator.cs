@@ -31,7 +31,7 @@ public class ChangeBoxGenerator : SingletonMonoBehaviour<ChangeBoxGenerator>
 	// --------------- private ---------------
 	Transform playerTransform;
 	FadeCamera fadeCamera;
-	LinkedList<ChangeBox> boxes;
+	Queue<ChangeBox> boxes;
 	float timer = 0;
 	int timesIndex = 0;
 
@@ -45,7 +45,7 @@ public class ChangeBoxGenerator : SingletonMonoBehaviour<ChangeBoxGenerator>
 	{
 		this.playerTransform = GameObject.FindWithTag ("Player").transform;
 		this.fadeCamera = GameObject.Find ("FadeCamera").GetComponent<FadeCamera> ();
-		this.boxes = new LinkedList<ChangeBox> ();
+		this.boxes = new Queue<ChangeBox> ();
 	}
 	
 	/************************************************************************************//**
@@ -85,8 +85,9 @@ public class ChangeBoxGenerator : SingletonMonoBehaviour<ChangeBoxGenerator>
 		if (this.boxes.Count != 0)
 		{
 			// ボックスを全て破壊する.
-			foreach (var box in boxes)
+			for (int i = 0; i < this.boxes.Count; i++)
 			{
+				var box = this.boxes.Dequeue ();
 				box.Destroy ();
 			}
 			// 画面全体にBGMパート切り替え時のエフェクトを掛ける.
@@ -112,7 +113,7 @@ public class ChangeBoxGenerator : SingletonMonoBehaviour<ChangeBoxGenerator>
 		obj.transform.parent = this.transform;
 		var script = obj.GetComponent<ChangeBox> ();
 		script.Init (this.playerTransform);
-		this.boxes.AddLast (script);
+		this.boxes.Enqueue (script);
 	}
 
 }

@@ -88,7 +88,7 @@ public class EnemyGenerator : MonoBehaviour
 	void InstantiateRandomly()
 	{
 		// 座標算出.
-		float x = Random.Range (0, WallManager.Inst.RoadWidth) - (WallManager.Inst.RoadWidth / 2);
+		float x = Random.Range (0, WallManager.Inst.RoadWidth - 2.0f) - (WallManager.Inst.RoadWidth / 2 - 1);
 		float y = generationOffsetY;
 		float z = this.nextLine + generationOffsetZ;
 		var pos = new Vector3 (x, y, z);

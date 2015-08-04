@@ -15,6 +15,8 @@ public class Attack : MonoBehaviour {
 	private GameObject shockWaveEffect;
 	[SerializeField]
 	private float wavePosZ = 10.0f;
+	[SerializeField]
+	private float wavePosY = 2.0f;
 
 
 	private KinectManager manager;
@@ -44,9 +46,9 @@ public class Attack : MonoBehaviour {
 		centerWidthHalf = centerWidth * 0.5f;
 
 		// 位置の設定
-		rightPos = new Vector3 (shockWave.transform.localScale.x, 0.0f, wavePosZ);
-		leftPos = new Vector3 (-shockWave.transform.localScale.x, 0.0f, wavePosZ);
-		centerPos = new Vector3 (0.0f, 0.0f, wavePosZ);
+		rightPos = new Vector3 (shockWave.transform.localScale.x, wavePosY, wavePosZ);
+		leftPos = new Vector3 (-shockWave.transform.localScale.x, wavePosY, wavePosZ);
+		centerPos = new Vector3 (0.0f, wavePosY, wavePosZ);
 
 		// プレイヤーオブジェクトの取得
 		player = GameObject.FindGameObjectWithTag ("Player");

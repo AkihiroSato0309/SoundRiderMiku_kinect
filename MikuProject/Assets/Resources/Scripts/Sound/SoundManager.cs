@@ -459,6 +459,6 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
 	{
 		this.canChangeBGMSpeed = false;
 		currentAudio.pitch = 1.0f;
-		currentAudio.pitch = 1.0f;
+		anotherAudio.pitch = 1.0f;
 	}
 }
