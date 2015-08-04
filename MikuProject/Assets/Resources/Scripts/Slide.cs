@@ -65,6 +65,7 @@ public class Slide : BaseBeatBehaviour
 	public void StartSlide ()
 	{
 		this.canSlide = true;
+		this.gameObject.SetActive (true);
 	}
 
 	// スライドを進める
