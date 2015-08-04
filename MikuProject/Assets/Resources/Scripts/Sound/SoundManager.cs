@@ -62,6 +62,7 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
 	AudioSource currentAudio;				// 現在使用しているAudioSource.
 	AudioSource anotherAudio;				// 現在未使用のAudioSource.
 	AudioSource seAudio;					// SEを鳴らすために使うAudioSource.
+	AudioSource seAudioDependingPitch;		// 現在のリズムに応じてSEを鳴らすために使うAudioSource.
 	IRhythmCheck rhythmChecker;				// プレイヤーのリズムを取得するオブジェクト.
 	float originalBPS;						// 曲の元のBPS (beat per second).
 	double subBeatFreq;						// サブビートの頻度.
@@ -212,6 +213,7 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
 		this.currentAudio = this.gameObject.AddComponent<AudioSource> ();
 		this.anotherAudio = this.gameObject.AddComponent<AudioSource> ();
 		this.seAudio = this.gameObject.AddComponent<AudioSource> ();
+		this.seAudioDependingPitch = this.gameObject.AddComponent<AudioSource> ();
 
 		// 設定.
 		this.currentAudio.clip = bgmParts [this.currentPhase];
@@ -220,6 +222,7 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
 		this.currentAudio.spatialBlend = 0;
 		this.anotherAudio.spatialBlend = 0;
 		this.seAudio.spatialBlend = 0;
+		this.seAudioDependingPitch.spatialBlend = 0;
 
 		// BGMの再生.
 		this.currentAudio.Play ();
@@ -317,8 +320,8 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
 			// 最後の小節の開始タイミングであれば, 
 			if (this.elapsedTime > this.lastBarStartTime)
 			{
-				this.seAudio.PlayOneShot (this.cushionSE);	// ループ時の途切れを隠すためにSEを鳴らす.
-				this.lastBarStartTime += 100;				// lastBarStartTimeが再計算されることを見越して, とりあえず大きな数値を入れておく.
+				this.seAudioDependingPitch.PlayOneShot (this.hidingLoopSE);	// ループ時の途切れを隠すためにSEを鳴らす.
+				this.lastBarStartTime += 100;								// lastBarStartTimeが再計算されることを見越して, とりあえず大きな数値を入れておく.
 
 				if (this.currentPhase == 0)
 				{
@@ -358,7 +361,7 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
 		}
 
 		// クッション音を鳴らす
-		this.seAudio.PlayOneShot (cushionSE);
+		this.seAudioDependingPitch.PlayOneShot (cushionSE);
 		yield return null;
 
 		// 小節の開始になるまで待機
@@ -406,7 +409,10 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
 		//targetSpeed = this.ValueToMultipleWithRound (targetSpeed, 0.1f);
 
 		float newPitch = Mathf.Lerp (this.currentAudio.pitch, targetSpeed, 0.01f);
-		this.currentAudio.pitch = Mathf.Clamp (newPitch, this.playSpeedMin, this.playSpeedMax); 
+		newPitch = Mathf.Clamp (newPitch, this.playSpeedMin, this.playSpeedMax);
+		this.currentAudio.pitch = newPitch;
+		this.anotherAudio.pitch = newPitch;
+		this.seAudioDependingPitch.pitch = newPitch;
 	}
 
 	/************************************************************************************//**
@@ -458,7 +464,12 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
 	void StartOutro ()
 	{
 		this.canChangeBGMSpeed = false;
-		currentAudio.pitch = 1.0f;
-		anotherAudio.pitch = 1.0f;
+		this.currentAudio.pitch = 1.0f;
+		this.anotherAudio.pitch = 1.0f;
+		this.seAudioDependingPitch.pitch = 1.0f;
+
+		var canvas = GameObject.FindWithTag ("Canvas");
+		var slide = canvas.transform.FindChild ("Slide").GetComponent<Slide> ();
+		slide.StartSlide ();
 	}
 }
