@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerCharacter : MonoBehaviour {
+public class PlayerCharacter : MonoBehaviour, IPlayerCharacter {
 
 	[SerializeField]
 	private float speed;
@@ -63,7 +63,6 @@ public class PlayerCharacter : MonoBehaviour {
 	****************************************************************************************/
 	void Move()
 	{
-
 		Vector3 newPos = new Vector3 (this.transform.position.x, this.transform.position.y, this.soundManager.Time * speed);
 		newPos.x = Mathf.Lerp (newPos.x, movePointX, turnSmooth);
 		this.transform.position = newPos;
@@ -79,4 +78,15 @@ public class PlayerCharacter : MonoBehaviour {
 	{
 		movePointX = transform.position.x + moveX;
 	}
+
+	/************************************************************************************//**
+	基底スピードの取得
+		
+	@return 基底スピード
+	****************************************************************************************/
+	float GetSpeed()
+	{
+		return speed;
+	}
+
 }
