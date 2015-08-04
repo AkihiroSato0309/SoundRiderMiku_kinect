@@ -57,7 +57,8 @@ public class RhythmCheck : MonoBehaviour, IRhythmCheck{
 	}
 	
 	// 更新処理
-	void Update () {
+	void Update () 
+	{
 		// タイマーを増やす
 		timer += Time.deltaTime;
 
@@ -90,6 +91,7 @@ public class RhythmCheck : MonoBehaviour, IRhythmCheck{
 			float def = lastCheckObjectPosY - pos.y;
 			if(def > deffPosY)
 			{
+				// 2回連続でとるのを防止
 				result = underYFlag.FlagChack(true);
 				if(result == true)
 				{
