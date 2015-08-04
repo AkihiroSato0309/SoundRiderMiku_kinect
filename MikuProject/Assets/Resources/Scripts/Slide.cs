@@ -71,13 +71,14 @@ public class Slide : BaseBeatBehaviour
 	// スライドを進める
 	public void Next()
 	{
+		currentNum++;
+
 		// 配列外アクセスの防止
 		if (currentNum == texts.Length) 
 		{
 			return;
 		}
 
-		currentNum++;
 		text.text =  texts[currentNum];
 	}
 }
