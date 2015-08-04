@@ -17,6 +17,7 @@ public class PlayerCharacter : MonoBehaviour, IPlayerCharacter {
 	private float rotatePointY;
 	private SoundManager soundManager;
 
+
 	/************************************************************************************//**
 	初期化.
 		

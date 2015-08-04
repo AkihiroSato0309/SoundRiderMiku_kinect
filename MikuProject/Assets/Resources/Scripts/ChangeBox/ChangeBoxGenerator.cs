@@ -30,6 +30,8 @@ public class ChangeBoxGenerator : SingletonMonoBehaviour<ChangeBoxGenerator>
 	
 	// --------------- private ---------------
 	Transform playerTransform;
+	FadeCamera fadeCamera;
+	LinkedList<ChangeBox> boxes;
 	float timer = 0;
 	int timesIndex = 0;
 
@@ -42,6 +44,8 @@ public class ChangeBoxGenerator : SingletonMonoBehaviour<ChangeBoxGenerator>
 	void Awake()
 	{
 		this.playerTransform = GameObject.FindWithTag ("Player").transform;
+		this.fadeCamera = GameObject.Find ("FadeCamera").GetComponent<FadeCamera> ();
+		this.boxes = new LinkedList<ChangeBox> ();
 	}
 	
 	/************************************************************************************//**
@@ -70,10 +74,24 @@ public class ChangeBoxGenerator : SingletonMonoBehaviour<ChangeBoxGenerator>
 	****************************************************************************************/
 	public void MoveToNextPhase ()
 	{
+		// 既に最後のインデックスであれば, 何もしない.
 		if (this.timesIndex == (this.generationTimes.Length - 1)) return;
 
+		// タイマーをリセットし, インデックスを進める.
 		++this.timesIndex;
 		this.timer = 0;
+
+		// チェンジボックスが1つでも存在するなら.
+		if (this.boxes.Count != 0)
+		{
+			// ボックスを全て破壊する.
+			foreach (var box in boxes)
+			{
+				box.Destroy ();
+			}
+			// 画面全体にBGMパート切り替え時のエフェクトを掛ける.
+			fadeCamera.FadeStart ();
+		}
 	}
 	
 	/************************************************************************************//**
@@ -90,8 +108,11 @@ public class ChangeBoxGenerator : SingletonMonoBehaviour<ChangeBoxGenerator>
 		var pos = new Vector3 (x, y, z);
 		
 		// インスタンス化と, インスタンスの初期化.
-		var changeBox = Instantiate (this.changeBoxPrefab, pos, Quaternion.identity) as GameObject;
-		changeBox.transform.parent = this.transform;
+		var obj = Instantiate (this.changeBoxPrefab, pos, Quaternion.identity) as GameObject;
+		obj.transform.parent = this.transform;
+		var script = obj.GetComponent<ChangeBox> ();
+		script.Init (this.playerTransform);
+		this.boxes.AddLast (script);
 	}
 
 }
