@@ -55,6 +55,8 @@ public class ChangeBoxGenerator : SingletonMonoBehaviour<ChangeBoxGenerator>
 	****************************************************************************************/
 	void Update()
 	{
+		if (this.timesIndex == generationTimes.Length) return;
+
 		float targetTime = this.generationTimes [timesIndex];
 		if (targetTime < 0) return;
 
@@ -74,9 +76,6 @@ public class ChangeBoxGenerator : SingletonMonoBehaviour<ChangeBoxGenerator>
 	****************************************************************************************/
 	public void MoveToNextPhase ()
 	{
-		// 既に最後のインデックスであれば, 何もしない.
-		if (this.timesIndex == (this.generationTimes.Length - 1)) return;
-
 		// タイマーをリセットし, インデックスを進める.
 		++this.timesIndex;
 		this.timer = 0;
