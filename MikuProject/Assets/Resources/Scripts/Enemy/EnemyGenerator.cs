@@ -21,7 +21,7 @@ public class EnemyGenerator : MonoBehaviour
 	[SerializeField]
 	GameObject enemyPrefab;				// 生成する背景装飾オブジェクトのプレハブ.
 	[SerializeField]
-	float distance = 100;				// プレイヤーがここに設定された距離を進む度に, 生成が行われる.
+	float distance = 10;				// プレイヤーがここに設定された距離を進む度に, 生成が行われる.
 	[SerializeField]
 	int instantiationPerGeneration = 1;	// 一度の生成でいくつインスタンスを作るか.
 	[SerializeField]
@@ -31,6 +31,7 @@ public class EnemyGenerator : MonoBehaviour
 	
 	// --------------- private ---------------
 	Transform playerTransform;	// プレイヤーのTransform.
+	float realDistance;			// プレイヤーの速度を加味したdisntace.
 	float nextLine = 0;			// 次の生成発生地点のZ座標.
 	
 	
@@ -42,12 +43,13 @@ public class EnemyGenerator : MonoBehaviour
 	void Start()
 	{
 		// プレイヤー情報の取得.
-		var player = GameObject.FindWithTag ("Player");
-		//var playerScript = player.GetComponent<PlayerStub> ();
-		this.playerTransform = player.transform;
+		var playerObj = GameObject.FindWithTag ("Player");
+		var player = playerObj.GetComponent<IPlayerCharacter> ();
+		this.playerTransform = playerObj.transform;
 		
 		// イントロ中は障害物が発生しないように, 生成発生地点をずらす.
-		this.nextLine = 10 * SoundManager.Inst.IntroLength;
+		this.realDistance = distance * player.GetSpeed ();
+		this.nextLine = SoundManager.Inst.IntroLength * player.GetSpeed ();
 	}
 	
 	/************************************************************************************//**
@@ -75,7 +77,7 @@ public class EnemyGenerator : MonoBehaviour
 		{
 			this.InstantiateRandomly ();
 		}
-		this.nextLine += this.distance;
+		this.nextLine += this.realDistance;
 	}
 	
 	/************************************************************************************//**

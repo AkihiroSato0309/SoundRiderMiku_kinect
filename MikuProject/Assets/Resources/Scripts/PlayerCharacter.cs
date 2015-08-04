@@ -16,6 +16,7 @@ public class PlayerCharacter : MonoBehaviour, IPlayerCharacter {
 	private float movePointX;
 	private SoundManager soundManager;
 
+
 	/************************************************************************************//**
 	初期化.
 		

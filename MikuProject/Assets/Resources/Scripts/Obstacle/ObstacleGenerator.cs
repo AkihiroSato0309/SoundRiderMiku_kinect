@@ -22,13 +22,14 @@ public class ObstacleGenerator : MonoBehaviour
 	[SerializeField]
 	GameObject obstaclePrefab;			// 生成する背景装飾オブジェクトのプレハブ.
 	[SerializeField]
-	float distance = 50;				// プレイヤーがここに設定された距離を進む度に, 生成が行われる.
+	float distance = 10;				// 生成を行う基準となる距離. プレイヤーの速度は1と考えて入力する.
 	[SerializeField]
 	int instantiationPerGeneration = 5;	// 一度の生成でいくつインスタンスを作るか.
 	
 	// --------------- private ---------------
 	const int initialNum = 5;	// Startで何度生成を行うか.
 	Transform playerTransform;	// プレイヤーのTransform.
+	float realDistance;			// プレイヤーの速度を加味したdisntace.
 	float nextLine = 0;			// 次の生成発生地点のZ座標
 	float posOffsetZ = 0;		// 生成するインスタンスのZ座標に対するオフセット.
 	
@@ -41,12 +42,13 @@ public class ObstacleGenerator : MonoBehaviour
 	void Start()
 	{
 		// プレイヤー情報の取得.
-		var player = GameObject.FindWithTag ("Player");
-		//var playerScript = player.GetComponent<PlayerStub> ();
-		this.playerTransform = player.transform;
+		var playerObj = GameObject.FindWithTag ("Player");
+		var player = playerObj.GetComponent<IPlayerCharacter> ();
+		this.playerTransform = playerObj.transform;
 
 		// イントロ中は障害物が発生しないように, 生成位置オフセットと生成発生地点をずらす.
-		this.posOffsetZ = 10 * SoundManager.Inst.IntroLength;
+		this.realDistance = distance * player.GetSpeed ();
+		this.posOffsetZ = player.GetSpeed () * SoundManager.Inst.IntroLength;
 		this.nextLine = this.posOffsetZ;
 
 		// 初期生成.
@@ -54,7 +56,7 @@ public class ObstacleGenerator : MonoBehaviour
 		{
 			this.Generate ();
 		}
-		this.nextLine -= (this.distance * initialNum);	// 初期生成でずれた分を修正
+		this.nextLine -= (this.realDistance * initialNum);	// 初期生成でずれた分を修正
 	}
 	
 	/************************************************************************************//**
@@ -82,8 +84,8 @@ public class ObstacleGenerator : MonoBehaviour
 		{
 			this.InstantiateRandomly ();
 		}
-		this.nextLine += this.distance;
-		this.posOffsetZ += this.distance;
+		this.nextLine += this.realDistance;
+		this.posOffsetZ += this.realDistance;
 	}
 
 	/************************************************************************************//**
@@ -96,7 +98,7 @@ public class ObstacleGenerator : MonoBehaviour
 		// 座標算出.
 		float x = Random.Range (0, WallManager.Inst.RoadWidth) - (WallManager.Inst.RoadWidth / 2);
 		float y = playerTransform.position.y;
-		float z = Random.Range (0, this.distance) + this.posOffsetZ;
+		float z = Random.Range (0, this.realDistance) + this.posOffsetZ;
 		var pos = new Vector3 (x, y, z);
 
 		// インスタンス化と, インスタンスの初期化.
