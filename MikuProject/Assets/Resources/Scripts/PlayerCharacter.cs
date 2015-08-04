@@ -84,7 +84,7 @@ public class PlayerCharacter : MonoBehaviour, IPlayerCharacter {
 		
 	@return 基底スピード
 	****************************************************************************************/
-	float GetSpeed()
+	public float GetSpeed()
 	{
 		return speed;
 	}
