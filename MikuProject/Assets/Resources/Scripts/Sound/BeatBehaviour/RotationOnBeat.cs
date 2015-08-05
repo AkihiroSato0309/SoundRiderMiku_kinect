@@ -39,7 +39,7 @@ public class RotationOnBeat : BaseBeatBehaviour
 	{
 		if ((++this.subBeatCount % this.freq_subBeat) == 1)
 		{
-			if (this.canRotate) this.StartCoroutine (this.Rotate ());
+			//if (this.canRotate) this.StartCoroutine (this.Rotate ());
 		}
 	}
 	
@@ -71,6 +71,7 @@ public class RotationOnBeat : BaseBeatBehaviour
 
 			yield return null;
 		}
+		yield return null;
 		this.transform.eulerAngles = to;
 
 		this.canRotate = true;
