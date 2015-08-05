@@ -271,6 +271,9 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
 
 		// ElapsedTime（総経過時間）を計算.
 		this.elapsedTime += this.deltaTime;
+
+		//Debug.Log (this.deltaTime);
+		//Debug.Log (this.elapsedTime);
 	}
 
 	/************************************************************************************//**
@@ -393,7 +396,7 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
 			this.StartOutro ();
 		}
 
-		// 他のオブジェクトに次フェイズへの移行を通知
+		// 他のオブジェクトに次フェイズへの移行を通知.
 		BGObjManager.Inst.MoveToNextPhase (this.currentPhase);
 		ChangeBoxGenerator.Inst.MoveToNextPhase ();
 	}

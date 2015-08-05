@@ -31,7 +31,7 @@ public class RotationOnBeat : BaseBeatBehaviour
 	
 	
 	/************************************************************************************//**
-	通知受け取り. ビートに合わせて拡大する.
+	通知受け取り. ビートに合わせて回転する.
 		
 	@return なし		
 	****************************************************************************************/
@@ -39,7 +39,7 @@ public class RotationOnBeat : BaseBeatBehaviour
 	{
 		if ((++this.subBeatCount % this.freq_subBeat) == 1)
 		{
-			//if (this.canRotate) this.StartCoroutine (this.Rotate ());
+			if (this.canRotate) this.StartCoroutine (this.Rotate ());
 		}
 	}
 	
@@ -56,9 +56,6 @@ public class RotationOnBeat : BaseBeatBehaviour
 		var from = this.transform.eulerAngles;
 		var to = from + rotation;
 
-		Debug.Log (from);
-		Debug.Log (to);
-		
 		// 回転に掛ける時間.
 		float time = this.time_subBeat * SoundManager.Inst.SubBeatFreq;
 		
