@@ -89,6 +89,9 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
 	****************************************************************************************/
 	void Awake ()
 	{
+		// シングルトンであることを保証.
+		if (base.MakeIntoSingleton ()) return;
+
 		// コンテナ生成.
 		this.seClips = new Dictionary<SE, AudioClip> ();
 		this.seClipPathes = new Dictionary<SE, string> ();
