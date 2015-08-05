@@ -39,7 +39,7 @@ public class SlideCheck : MonoBehaviour {
 			// 差を計算
 			depthDeff = footRightPos.z - footLeftPos.z;
 		}
-		print (depthDeff);
+		//print (depthDeff);
 		playerChara.MoveSlide (depthDeff * moveSpeed);
 	}
 }
