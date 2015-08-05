@@ -24,13 +24,9 @@ public class HP : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		if (Input.GetKeyDown (KeyCode.Space)) 
-		{
-			UpDown(-1);
-		}
 	}
 
-	void UpDown(int num)
+	public void UpDown(int num)
 	{
 		currentHP += num;
 

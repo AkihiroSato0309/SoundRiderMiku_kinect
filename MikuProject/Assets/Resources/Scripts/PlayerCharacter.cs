@@ -16,6 +16,7 @@ public class PlayerCharacter : MonoBehaviour, IPlayerCharacter {
 	private float movePointX;
 	private float rotatePointY;
 	private SoundManager soundManager;
+	private HP hpScript;
 
 
 	/************************************************************************************//**
@@ -27,6 +28,7 @@ public class PlayerCharacter : MonoBehaviour, IPlayerCharacter {
 	{
 		moveLimit = WallManager.Inst.RoadWidth * 0.5f - offsetX;
 		this.soundManager = GameObject.FindWithTag ("SoundManager").GetComponent<SoundManager> ();
+		this.hpScript = GameObject.Find ("HP").GetComponent<HP>();
 	}
 	
 	/************************************************************************************//**
@@ -100,6 +102,15 @@ public class PlayerCharacter : MonoBehaviour, IPlayerCharacter {
 	public float GetSpeed()
 	{
 		return speed;
+	}
+
+	void OnCollisionEnter(Collision col)
+	{
+		if (col.gameObject.tag == "Obstacle") 
+		{
+			print ("obstacle");
+			hpScript.UpDown(-1);
+		}
 	}
 
 }
